@@ -1,24 +1,10 @@
-{"id": "Fusion-guest", "timestamp": "2025-12-31T03:50:14.373767", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-admin", "timestamp": "2025-12-31T03:50:31.949845", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-admin", "timestamp": "2025-12-31T03:50:47.524946", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-admin-Audit", "timestamp": "2025-12-31T03:51:14.738365", "risk_score": 0.8, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
-{"id": "Fusion-admin-Audit", "timestamp": "2025-12-31T03:51:43.712127", "risk_score": 0.8, "mode": "ACTIVE_AZURE", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:34:24.850215", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: destructive | Violation: Critical: High-Velocity Data Destruction"}
-{"id": "Fusion-admin", "timestamp": "2026-01-02T12:35:27.275908", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: destructive | Violation: Critical: High-Velocity Data Destruction"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:35:57.654297", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: harmless | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:39:45.741353", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: harmless | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:44:36.248440", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: destructive | Violation: Critical: High-Velocity Data Destruction"}
-{"id": "Fusion-admin-Audit", "timestamp": "2026-01-02T12:44:58.105724", "risk_score": 0.8, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:47:30.859474", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:48:00.601778", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:48:42.962904", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:48:58.321807", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T12:49:18.806130", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: harmless | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-admin-Audit", "timestamp": "2026-01-02T13:13:34.670403", "risk_score": 0.8, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
-{"id": "Fusion-admin-Audit", "timestamp": "2026-01-02T13:13:57.885039", "risk_score": 0.8, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
-{"id": "Fusion-guest-Audit", "timestamp": "2026-01-02T13:57:53.703697", "risk_score": 0.8, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T13:58:29.226256", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: destructive | Violation: Critical: High-Velocity Data Destruction"}
-{"id": "Fusion-guest", "timestamp": "2026-01-02T13:58:52.641740", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-admin", "timestamp": "2026-01-02T13:59:09.428807", "risk_score": 1.0, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Impact: credential_theft | Violation: Zero-Trust: Credential Access Attempt"}
-{"id": "Fusion-admin-Audit", "timestamp": "2026-01-02T13:59:37.709497", "risk_score": 0.8, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
-{"id": "Fusion-guest-Audit", "timestamp": "2026-01-02T13:59:53.707556", "risk_score": 0.8, "mode": "AUDIT", "decision": "LOG_ONLY", "context": "Sensitive Action Triggered Verification (Audit Only)"}
+[
+    {
+        "id": "Fusion-admin-Audit",
+        "timestamp": "2026-01-02T14:17:31.532759",
+        "risk_score": 0.8,
+        "mode": "AUDIT",
+        "decision": "LOG_ONLY",
+        "context": "Sensitive Action Triggered Verification (Audit Only)"
+    }
+]

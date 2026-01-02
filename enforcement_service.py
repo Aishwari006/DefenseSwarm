@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from datetime import datetime
 
 try:
@@ -78,5 +79,16 @@ class EnforcementService:
         return audit_entry
 
     def _write_audit(self, entry):
-        with open(self.audit_file, "a") as f:
-            f.write(json.dumps(entry) + "\n")
+        data = []
+        if os.path.exists(self.audit_file):
+            try:
+                with open(self.audit_file, "r") as f:
+                    data = json.load(f)
+            except (json.JSONDecodeError, FileNotFoundError):
+                data = []
+
+        data.append(entry)
+
+        with open(self.audit_file, "w") as f:
+            json.dump(data, f, indent=2)
+
