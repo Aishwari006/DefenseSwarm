@@ -1,6 +1,8 @@
 import streamlit as st
 import requests
 from enforcement_service import EnforcementService
+import logging
+import time
 
 # --- SIDEBAR CONFIGURATION ---
 st.sidebar.header("⚙️ System Control")
@@ -147,7 +149,7 @@ with tab2:
             st.error(f"Connection Error: {e}")
 
 # ---------------------------------------------------------------------
-# 🚀 THE SWARM FUSION ENGINE (Final Judge-Proof Version)
+# 🚀 THE SWARM FUSION ENGINE (Honeypot Logic)
 # ---------------------------------------------------------------------
 st.markdown("---")
 st.header("🛡️ Swarm Fusion: The 'Smart Hacker' Trap")
@@ -195,103 +197,83 @@ with col_f2:
         except:
             behavior_score = 0.0
 
-        # --- 3. CALL AGENT 3 (The Governor / Policy Core) ---
-        try:
-            gov_resp = requests.post(
-                f"{BASE_URL}/GovernorAgent",
-                json={
-                    "intent_data": intent_data,
-                    "behavior_score": behavior_score,
-                    "user_role": fusion_role  # FIX 2: RBAC Contract (Passing Role)
-                }
-            ).json()
-        except:
-            gov_resp = {} # Fallback to empty dict to trigger safety check below
+        # We ignore the Governor's usual logic and apply our own Amplification/Dampening
         
-        # Safety Normalization (Fixes crashes if backend sends weird data)
-        if not isinstance(gov_resp, dict):
-            gov_resp = {
-                "decision": "ALLOW", 
-                "impact": "unknown", 
-                "final_risk_score": 0.0,
-                "policy_violation": "None"
-            }
+        intent = intent_data.get("intent", "unknown")
+        # Reuse 'impact' if available or infer
+        impact = intent_data.get("impact", "unknown")
+        
+        # DEMO LOGGING (Mimics Governor)
+        try:
+             requests.post(f"{BASE_URL}/SystemLogger", json={"type": "HEADER", "message": "HONEYPOT GOVERNOR (LOCAL) STARTED"})
+             requests.post(f"{BASE_URL}/SystemLogger", json={"type": "INFO", "message": f"📥 INTENT: {intent}"})
+             requests.post(f"{BASE_URL}/SystemLogger", json={"type": "INFO", "message": f"📥 IMPACT: {impact}"})
+        except:
+             pass
+        
+        # Check explicit suspicious flags
+        # MODIFIED: "Standard application workflow" (Login/File Access) should NOT trigger Block if velocity is low.
+        strict_malicious = intent in ["data_exfiltration", "privilege_escalation"] or impact in ["credential_theft", "destructive"]
+        
+        # Aggressive behavior threshold for honeypot
+        is_aggressive = behavior_score > 0.4
+        
+        # Combined Condition: 
+        should_block = strict_malicious or is_aggressive
+        
+        final_risk = 0.0
+        policy_violation = "None"
+        decision = "ALLOW"
+        
+        if should_block:
+            # Amplification -> Killer Agent
+            final_risk = 0.95
+            decision = "BLOCK"
+            policy_violation = "KILLER AGENT TRIGGERED: Malicious Activity Detected in Honeypot"
+            impact = "critical"
             
-        # STORE RESULT IN SESSION STATE
-        st.session_state['swarm_result'] = {
-            "intent_data": intent_data,
-            "behavior_score": behavior_score,
-            "gov_resp": gov_resp,
-            "fusion_role": fusion_role
-        }
-
-    # --- DISPLAY LOGIC (Persists across re-runs) ---
-    if 'swarm_result' in st.session_state:
-        result_data = st.session_state['swarm_result']
-        intent_data = result_data['intent_data']
-        behavior_score = result_data['behavior_score']
-        gov_resp = result_data['gov_resp']
-        fusion_role = result_data['fusion_role']
-
-        final_risk = gov_resp.get("final_risk_score", 0.0)
-        policy_violation = gov_resp.get("policy_violation", "None") 
-        require_otp = gov_resp.get("require_otp", False)
-
-        # --- HONEYPOT REDIRECTION ---
-        # Skip redirection if OTP is required (User explicit request: Treat as normal with verification)
-        if 0.5 <= final_risk < 0.9 and not require_otp:
-            st.warning("⚠️ Analyzing Risk Pattern...")
-            st.switch_page("pages/honeypot.py")
+            # LOGGING: Send to Backend Console
+            try:
+                requests.post(f"{BASE_URL}/SystemLogger", json={
+                    "type": "decision_block",
+                    "risk": final_risk
+                })
+            except:
+                pass
+            
+            st.switch_page("pages/blocked.py")
+        else:
+            # Dampening -> Redirect to safe
+            final_risk = 0.1
+            decision = "ALLOW"
+            policy_violation = "None"
+            impact = "none"
+            
+            # LOGGING: Send to Backend Console
+            try:
+                 requests.post(f"{BASE_URL}/SystemLogger", json={
+                    "type": "decision_allow",
+                    "risk": final_risk
+                })
+            except:
+                 pass
 
         # --- VISUALIZATION (Show the Judges the Math) ---
         st.write(f"🕵️ **Intent:** {intent_data.get('intent')} (Conf: {intent_data.get('confidence', 0.0):.2f})")
         st.write(f"🧠 **Behavior Risk:** {behavior_score:.2f}")
-        st.write(f"⚠️ **Impact Class:** {gov_resp.get('impact')}")
+        st.write(f"⚠️ **Impact Class:** {impact}")
         st.metric("💥 Final Risk Score", f"{final_risk:.2f}")
 
-        # --- 4. ENFORCEMENT (Policy-Driven, Single Source of Truth) ---
-        decision = gov_resp.get("decision", "ALLOW")
+        # --- 4. ENFORCEMENT (Honeypot Flavor) ---
         
-        # New OTP CASE
-        if require_otp:
-             st.success("✅ TRAFFIC NORMAL (Verification Required)")
-             st.info("Additional verification required - Mobile number OTP")
-             col_otp1, col_otp2 = st.columns(2)
-             number = col_otp1.text_input("Mobile Number")
-             otp = col_otp2.text_input("OTP Code")
-             if st.button("Verify OTP"):
-                 if number and otp:
-                     st.success("Authentication Successful.")
-                 else:
-                     st.error("Please enter valid details.")
-
-        elif decision == "BLOCK":
-            # FIX 1 (Step B): Display the policy violation to the user
-            st.error(f"⛔ BLOCKED — {policy_violation}")
-
-            # NOTE: In a real production environment, this call would happen 
-            # automatically on the backend (Orchestrator).
-            result = enforcer.execute_containment(
-                incident_id=f"Fusion-{fusion_role}",
-                risk_score=final_risk,
-                context=f"Impact: {gov_resp.get('impact')} | Violation: {policy_violation}"
-            )
+        if decision == "BLOCK":
+            # Show Killer Agent Triggered
+            st.error(f"⛔ {policy_violation}")
+            st.error("SYSTEM LOCKDOWN INITIATED")
             
-            with st.expander("📋 View Enforcement Log"):
-                st.json(result)
-                
-        elif decision in ["VERIFY_THEN_ALLOW", "VERIFY_THEN_ALLOW_AUDIT"]:
-            st.warning("⚠️ VERIFICATION REQUIRED")
-            
-            # FIX 3: Audit Logging for sensitive but allowed actions
-            enforcer.execute_containment(
-                incident_id=f"Fusion-{fusion_role}-Audit",
-                risk_score=final_risk,
-                context="Sensitive Action Triggered Verification (Audit Only)"
-            )
-
-            if st.button("✅ Approve Action"):
-                st.success("ACCESS GRANTED (Time-Boxed & Audited)")
+            # Simulation of blocking action
+            st.image("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5/8L0PkyzC761YO/giphy.gif", caption="Killer Agent Active", width=200)
 
         else:
-            st.success("✅ TRAFFIC NORMAL")
+             st.success("Redirecting to production...")
+             st.info("Traffic classified as benign. Re-routing to main dashboard.")

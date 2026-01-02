@@ -1,10 +1,66 @@
 [
-    {
-        "id": "Fusion-admin-Audit",
-        "timestamp": "2026-01-02T14:17:31.532759",
-        "risk_score": 0.8,
-        "mode": "AUDIT",
-        "decision": "LOG_ONLY",
-        "context": "Sensitive Action Triggered Verification (Audit Only)"
-    }
+  {
+    "id": "Fusion-admin-Audit",
+    "timestamp": "2026-01-02T14:17:31.532759",
+    "risk_score": 0.8,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Sensitive Action Triggered Verification (Audit Only)"
+  },
+  {
+    "id": "Fusion-admin",
+    "timestamp": "2026-01-02T20:37:01.491986",
+    "risk_score": 1.0,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Impact: sensitive_read | Violation: Critical: High-Velocity Data Destruction"
+  },
+  {
+    "id": "Fusion-admin",
+    "timestamp": "2026-01-02T22:51:26.553505",
+    "risk_score": 1.0,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Impact: harmless | Violation: Zero-Trust: Credential Access Attempt"
+  },
+  {
+    "id": "Fusion-admin",
+    "timestamp": "2026-01-02T22:51:48.286923",
+    "risk_score": 1.0,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Impact: harmless | Violation: Zero-Trust: Credential Access Attempt"
+  },
+  {
+    "id": "Fusion-admin",
+    "timestamp": "2026-01-03T02:04:40.498184",
+    "risk_score": 1.0,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Impact: destructive | Violation: Critical Risk Threshold Exceeded"
+  },
+  {
+    "id": "Fusion-admin",
+    "timestamp": "2026-01-03T02:04:57.294236",
+    "risk_score": 1.0,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Impact: destructive | Violation: Critical Risk Threshold Exceeded"
+  },
+  {
+    "id": "Fusion-admin",
+    "timestamp": "2026-01-03T02:04:57.360340",
+    "risk_score": 1.0,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Impact: destructive | Violation: Critical Risk Threshold Exceeded"
+  },
+  {
+    "id": "Fusion-admin",
+    "timestamp": "2026-01-03T02:53:07.507494",
+    "risk_score": 1.0,
+    "mode": "AUDIT",
+    "decision": "LOG_ONLY",
+    "context": "Impact: destructive | Violation: Critical Risk Threshold Exceeded"
+  }
 ]
